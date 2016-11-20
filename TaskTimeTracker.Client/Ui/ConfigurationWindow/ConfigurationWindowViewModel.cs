@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using TaskTimeTracker.Client.Contract.Configuration;
+using TaskTimeTracker.Client.Navigation;
 using TaskTimeTracker.Client.Ui.Commands;
 
 namespace TaskTimeTracker.Client.Ui.ConfigurationWindow {
@@ -26,7 +27,6 @@ namespace TaskTimeTracker.Client.Ui.ConfigurationWindow {
         OnPropertyChanged(nameof(this.SetStampOnStartupIsChecked));
       }
     }
-
 
     public string StartupStampText {
       get { return this._startupStampText; }
@@ -80,9 +80,29 @@ namespace TaskTimeTracker.Client.Ui.ConfigurationWindow {
 
     public ICommand OkCommand { get; }
 
+    /// <summary>
+    /// Method called when the view is loaded.
+    /// </summary>
+    public void OnLoaded()
+    {
+      this.Controller.OnLoaded();
+    }
+
+    /// <summary>
+    /// Method called when the view is Unloaded
+    /// </summary>
+    public void OnUnLoaded() {
+      this.Controller.OnUnLoaded();
+    }
+
+    public IConfigurationWindowViewModel Clone()
+    {
+      return (IConfigurationWindowViewModel)this.MemberwiseClone();
+    }
 
     public ConfigurationWindowViewModel(IConfigurationViewModelController controller) {
       this.Controller = controller;
+      this.Controller.ViewModel = this;
       this.CancelCommand = new RelayCommand(controller.ExecuteCancel);
       this.OkCommand = new RelayCommand(controller.ExecuteOk);
     }

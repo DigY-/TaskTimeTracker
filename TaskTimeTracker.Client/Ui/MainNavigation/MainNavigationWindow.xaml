@@ -1,0 +1,29 @@
+﻿<metro:MetroWindow x:Class="TaskTimeTracker.Client.Ui.MainNavigation.MainNavigationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTimeTracker.Client.Ui.MainNavigation"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:configView="clr-namespace:TaskTimeTracker.Client.Ui.ConfigurationWindow"
+        xmlns:defaultView="clr-namespace:TaskTimeTracker.Client.Ui.MainWindow"
+        mc:Ignorable="d"
+        Width="525"
+        Height="350"
+        TitleCharacterCasing="Normal"
+        Loaded="MainNavigationWindow_OnLoaded"
+        Closing="MainWindow_OnClosing"
+        Title="{StaticResource MainWindow.Title}">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type defaultView:MainWindowViewModel}">
+            <defaultView:MainWindow/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type configView:ConfigurationWindowViewModel}">
+            <configView:ConfigurationWindow/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <ContentControl Grid.Column="0" Content="{Binding SelectedViewModel}"/>
+    </Grid>
+</metro:MetroWindow>

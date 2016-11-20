@@ -9,7 +9,7 @@
         <ContextMenu>
           <MenuItem Command="{Binding CopyCommand}" Header="{DynamicResource TaskList.Entry.ContextMenu.Copy}" />
           <MenuItem Command="{Binding DataContext.RemoveCommand,
-                                      RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                      RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                     CommandParameter="{Binding}"
                     Header="{DynamicResource TaskList.Entry.ContextMenu.Delete}" />
         </ContextMenu>
@@ -50,7 +50,7 @@
                 Background="Transparent"
                 BorderBrush="Transparent"
                 Command="{Binding DataContext.RemoveCommand,
-                                  RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                  RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                 CommandParameter="{Binding}"
                 Content="x" />
         <Button Grid.Row="1"

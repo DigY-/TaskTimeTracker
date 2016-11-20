@@ -69,6 +69,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppInitializer.cs" />
     <Compile Include="Configuration\TaskTimeTrackerConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationV1Reader.cs" />
     <Compile Include="Configuration\TaskTimeTrackerConfigurationController.cs" />
@@ -76,6 +77,8 @@
     <Compile Include="Configuration\VersionedConfigurationReaderFactory.cs" />
     <Compile Include="Configuration\XmlConfigurationController.cs" />
     <Compile Include="Configuration\XmlConfigurationSerializer.cs" />
+    <Compile Include="Navigation\Navigator.cs" />
+    <Compile Include="Navigation\ViewModelNavigationCollection.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="TaskValue.cs" />
     <Compile Include="Ui\Behaviors\TextBoxBehavior.cs" />
@@ -91,6 +94,10 @@
       <DependentUpon>Inbox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Ui\Inbox\InboxViewModel.cs" />
+    <Compile Include="Ui\MainNavigation\MainNavigationViewModel.cs" />
+    <Compile Include="Ui\MainNavigation\MainNavigationWindow.xaml.cs">
+      <DependentUpon>MainNavigationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ui\MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -147,6 +154,10 @@
     <Page Include="Ui\Inbox\Inbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Ui\MainNavigation\MainNavigationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ui\MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

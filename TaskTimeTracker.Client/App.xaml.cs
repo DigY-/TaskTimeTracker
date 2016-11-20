@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using TaskTimeTracker.Client.Navigation;
+using TaskTimeTracker.Client.Ui.MainWindow;
 
 namespace TaskTimeTracker.Client {
   /// <summary>
@@ -25,6 +27,8 @@ namespace TaskTimeTracker.Client {
       this._notifyIcon.Icon = new System.Drawing.Icon(iconStream);
       this._notifyIcon.DoubleClick += NotifyIconOnDoubleClick;
       this._notifyIcon.Visible = true;
+
+      var navigator = Navigator.Instance;
     }
 
     private void NotifyIconOnDoubleClick(object sender, EventArgs e) {

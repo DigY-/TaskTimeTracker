@@ -2,7 +2,7 @@
 using System.Windows.Input;
 
 namespace TaskTimeTracker.Client.Contract.Configuration {
-  public interface IConfigurationWindowViewModel : INotifyPropertyChanged {
+  public interface IConfigurationWindowViewModel : ViewModelBase {
     string KeyOneString { get; set; }
     Key KeyOne { get; set; }
     bool ControlIsChecked { get; set; }
@@ -15,5 +15,10 @@ namespace TaskTimeTracker.Client.Contract.Configuration {
     ICommand CancelCommand { get; }
     ICommand OkCommand { get; }
     IConfigurationViewModelController Controller { get; set; }
+
+    void OnLoaded();
+    void OnUnLoaded();
+
+    IConfigurationWindowViewModel Clone();
   }
 }

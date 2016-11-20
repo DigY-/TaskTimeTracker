@@ -5,18 +5,17 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using TaskTimeTracker.Client.Configuration;
+using TaskTimeTracker.Client.Contract;
 using TaskTimeTracker.Client.Contract.Configuration;
+using TaskTimeTracker.Client.Navigation;
 using TaskTimeTracker.Client.Ui.Commands;
 using TaskTimeTracker.Client.Ui.ConfigurationWindow;
 using TaskTimeTracker.Client.Ui.Inbox;
 
 namespace TaskTimeTracker.Client.Ui.MainWindow {
-  internal class MainWindowViewModel {
+  internal class MainWindowViewModel : ViewModelBase {
     private ObservableCollection<Task> _tasks;
     private Visibility _mainWindowVisibility;
-    private IConfigurationWindowViewModel _configViewModel;
-    private readonly TaskTimeTrackerConfigurationController _configurationController;
-
     public Task SelectedTask { get; set; }
 
     public ObservableCollection<Task> Tasks {
@@ -50,22 +49,15 @@ namespace TaskTimeTracker.Client.Ui.MainWindow {
     /// </summary>
     public ICommand ConfigCommand { get; set; }
 
-    /// <summary>
-    /// Dem TaskTimeTrackerConfiguration
-    /// </summary>
-    public ITaskTimeTrackerConfiguration Configuration { get; set; }
-
     public ICommand MouseDoubleClick { get; set; }
 
-    public MainWindowViewModel(TaskTimeTrackerConfigurationController configurationController) {
+    public MainWindowViewModel() {
       this.Tasks = new ObservableCollection<Task>();
       this.AddCommand = new RelayCommand(AddExecute);
       this.RemoveCommand = new RelayCommand(RemoveExecute);
       this.ConfigCommand = new RelayCommand(ConfigExecute);
       this.MouseDoubleClick = new RelayCommand(this.MouseDoubleClickExecute);
       this.MainWindowVisibility = Visibility.Visible;
-      this._configurationController = configurationController;
-      this.Configuration = this._configurationController.Configuration;
     }
 
     private void MouseDoubleClickExecute(object o) {
@@ -77,16 +69,7 @@ namespace TaskTimeTracker.Client.Ui.MainWindow {
     }
 
     private void ConfigExecute(object obj) {
-      ConfigurationWindow.ConfigurationWindow configWindow = new ConfigurationWindow.ConfigurationWindow(Application.Current.MainWindow);
-      configWindow.ConfigurationController = this._configurationController;
-      ConfigurationViewModelController configurationViewModelController = new ConfigurationViewModelController(configWindow);
-      this._configViewModel = configurationViewModelController.FromConfiguration(this.Configuration);
-      configWindow.ViewModel = this._configViewModel;
-      configWindow.ShowDialog();
-      if (this.Configuration.CompareTo(this._configurationController.Configuration) != 0) {
-        this._configurationController.Save();
-        this.Configuration = this._configurationController.Configuration;
-      }
+      Navigator.Instance.NavigateTo(typeof(ConfigurationWindowViewModel));
     }
 
     private void RemoveExecute(object obj) {
@@ -117,14 +100,6 @@ namespace TaskTimeTracker.Client.Ui.MainWindow {
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
       this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public void OnWindowLoaded() {
-      if (!this.Configuration.SetStampOnStartupIsChecked) {
-        return;
-      }
-
-      this.Tasks.Add(new Task(DateTime.Now, this.Configuration.StartupStampText));
     }
   }
 }
